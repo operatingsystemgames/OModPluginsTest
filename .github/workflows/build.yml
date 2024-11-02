@@ -1,4 +1,4 @@
-name: Build test.cpp on Windows
+name: Build test.cpp as DLL on Windows
 
 on:
   push:
@@ -20,8 +20,8 @@ jobs:
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
 
-    - name: Compile test.cpp
-      run: cl /EHsc test.cpp
+    - name: Compile test.cpp as DLL
+      run: cl /LD /EHsc src/test.cpp /Fe:src/test.dll
 
-    - name: Run the executable
-      run: test.exe
+    - name: List output files
+      run: dir src
