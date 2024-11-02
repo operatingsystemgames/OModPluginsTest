@@ -14,14 +14,15 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Set up MSVC
-      run: |
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+    - name: Install Build Tools for Visual Studio
+      run: choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
 
     - name: Compile test.cpp as DLL
-      run: cl /LD /EHsc src/test.cpp /Fe:src/test.dll
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+        cl /LD /EHsc src/test.cpp /Fe:src/test.dll
 
     - name: List output files
       run: dir src
