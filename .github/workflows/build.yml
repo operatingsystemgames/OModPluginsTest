@@ -6,14 +6,6 @@ on:
       - main
   pull_request:
     branches:
-      - mainname: Build test.cpp as DLL on Windows
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
       - main
 
 jobs:
@@ -21,41 +13,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install Build Tools for Visual Studio
-      run: choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
+      - name: Install Build Tools for Visual Studio
+        run: choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
 
-    - name: Compile test.cpp as DLL
-      run: |
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-        cl /LD /EHsc src/test.cpp /Fe:src/test.dll
+      - name: Compile test.cpp as DLL
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          cl /LD /EHsc src/test.cpp /Fe:src/test.dll
 
-    - name: List output files
-      run: dir src
-
-
-jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'  # Укажи нужную версию Node.js, например, '14' или другую, которая тебе подходит
-
-    - name: Install Build Tools for Visual Studio
-      run: choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
-
-    - name: Compile test.cpp as DLL
-      run: |
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-        cl /LD /EHsc src/test.cpp /Fe:src/test.dll
-
-    - name: List output files
-      run: dir src
+      - name: List output files
+        run: dir src
